@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import { ALL_QUESTIONS, Question } from "../data/simpleQuestions";
 import KidCanvas, { KidCanvasRef } from "../components/KidCanvas";
-import Navbar from "../components/Navbar";
+
 const LETTERS = [
   "A",
   "B",
@@ -70,6 +70,7 @@ export default function Quiz() {
     try {
       const formData = new FormData();
       formData.append("image", imageBlob, "letter.png");
+      formData.append("actual_letter", correctAnswer);
 
       const response = await fetch("http://127.0.0.1:5000/predict", {
         method: "POST",
@@ -79,7 +80,7 @@ export default function Quiz() {
       const data = await response.json();
 
       if (response.ok) {
-        const predictedLetter = data.result;
+        const predictedLetter = data.predicted_letter;
         const correct = predictedLetter === correctAnswer;
 
         setIsCorrect(correct);
@@ -270,93 +271,50 @@ export default function Quiz() {
       </div>
 
       {/* Result Modal */}
-      {/* Result Modal */}
+
       {showResultModal && predictionDetails && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-6">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div className="bg-white rounded-3xl shadow-2xl p-8 max-w-lg w-full">
-            {/* Header */}
-            <div
-              className={`rounded-2xl p-6 text-center mb-6 ${
-                isCorrect
-                  ? "bg-green-100 border-4 border-green-400"
-                  : "bg-red-100 border-4 border-red-400"
-              }`}
-            >
-              <div className="text-6xl mb-3">{isCorrect ? "🎉" : "😊"}</div>
-
-              <h2
-                className={`text-3xl font-bold ${
-                  isCorrect ? "text-green-700" : "text-red-700"
-                }`}
-              >
-                {isCorrect ? "Great job!" : "Nice try!"}
+            <div className="text-center mb-6">
+              <div className="text-7xl mb-4">{predictionDetails.emoji}</div>
+              <h2 className="text-3xl font-bold text-purple-700">
+                {predictionDetails.kid_message}
               </h2>
-
-              <p className="text-lg text-gray-700 mt-2">
-                AI thought you wrote:
-                <span className="font-bold text-2xl mx-2">
-                  {predictionDetails.result}
+              <p className="mt-4 text-lg">
+                AI saw:{" "}
+                <span className="font-bold text-2xl">
+                  {predictionDetails.predicted_letter}
                 </span>
               </p>
-
-              <p className="text-gray-600 mt-1">
-                Confidence:{" "}
-                <span className="font-semibold">
-                  {predictionDetails.percentage}
-                </span>
+              <p className="text-gray-600">
+                Confidence: {predictionDetails.confidence}
               </p>
+              {predictionDetails.confidence_level === "high" && (
+                <p className="text-green-600 font-bold">
+                  Confidence Level: {predictionDetails.confidence_level}
+                </p>
+              )}
 
-              {!isCorrect && (
-                <p className="mt-4 text-xl text-gray-800">
-                  Correct letter is{" "}
-                  <span className="font-bold text-2xl text-purple-600">
-                    {correctAnswer}
-                  </span>
+              {predictionDetails.confidence_level === "medium" && (
+                <p className="text-blue-600 font-bold">
+                  Confidence Level: {predictionDetails.confidence_level}
+                </p>
+              )}
+
+              {predictionDetails.confidence_level === "low" && (
+                <p className="text-red-600 font-bold">
+                  Confidence Level: {predictionDetails.confidence_level}
                 </p>
               )}
             </div>
 
-            {/* Predictions */}
-            <div className="bg-gray-50 rounded-2xl p-5 mb-6">
-              <h4 className="font-bold text-lg mb-4 text-gray-800">
-                AI Predictions
-              </h4>
-
-              <div className="space-y-3">
-                {predictionDetails.class_probabilities
-                  .slice(0, 3)
-                  .map((item: any, idx: number) => {
-                    const letter = Object.keys(item)[0];
-                    const value = item[letter];
-
-                    return (
-                      <div key={idx} className="flex items-center gap-4">
-                        <div className="w-10 h-10 rounded-full bg-purple-200 flex items-center justify-center font-bold text-xl">
-                          {letter}
-                        </div>
-
-                        <div className="flex-1 bg-white rounded-full h-4 overflow-hidden">
-                          <div
-                            className="h-full bg-purple-500"
-                            style={{ width: value }}
-                          />
-                        </div>
-
-                        <span className="text-sm font-semibold">{value}</span>
-                      </div>
-                    );
-                  })}
-              </div>
-            </div>
-
-            {/* Next */}
             <button
               onClick={handleNext}
-              className="w-full py-4 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold text-xl shadow-lg hover:scale-105 transition-all"
+              className="w-full py-4 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold text-xl hover:scale-105"
             >
               {currentQuestionIndex < questions.length - 1
-                ? "Next Question ➡️"
-                : "Finish Quiz 🏁"}
+                ? "Next ➡️"
+                : "Finish 🏁"}
             </button>
           </div>
         </div>
