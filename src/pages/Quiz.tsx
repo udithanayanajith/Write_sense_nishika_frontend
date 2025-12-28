@@ -1,6 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import { ALL_QUESTIONS, Question } from "../data/simpleQuestions";
 import KidCanvas, { KidCanvasRef } from "../components/KidCanvas";
+import { useNavigate } from "react-router-dom";
 
 const LETTERS = [
   "A",
@@ -37,11 +38,36 @@ export default function Quiz() {
   const [quizComplete, setQuizComplete] = useState(false);
   const [predictionDetails, setPredictionDetails] = useState<any>(null);
   const shuffledLetters = useRef<string[]>(shuffle(LETTERS));
+  const [correctLetters, setCorrectLetters] = useState<string[]>([]);
+  const [weakLetters, setWeakLetters] = useState<string[]>([]);
+  const navigate = useNavigate();
 
+  // ALL HOOKS MUST BE AT THE TOP - before any conditional returns
   useEffect(() => {
     setQuestions(shuffle(ALL_QUESTIONS).slice(0, LETTERS.length));
   }, []);
 
+  useEffect(() => {
+    if (quizComplete) {
+      navigate("/results", {
+        state: {
+          score,
+          total: questions.length,
+          correctLetters,
+          weakLetters,
+        },
+      });
+    }
+  }, [
+    quizComplete,
+    navigate,
+    score,
+    questions.length,
+    correctLetters,
+    weakLetters,
+  ]);
+
+  // NOW we can have conditional returns
   if (questions.length === 0) {
     return (
       <div className="min-h-screen flex items-center justify-center text-2xl font-bold">
@@ -89,8 +115,10 @@ export default function Quiz() {
 
         if (correct) {
           setScore(score + 1);
+          setCorrectLetters((prev) => [...prev, correctAnswer]);
         }
       } else {
+        setWeakLetters((prev) => [...prev, correctAnswer]);
         alert(`Error: ${data.error}`);
       }
     } catch (error) {
@@ -126,34 +154,9 @@ export default function Quiz() {
     canvasRef.current?.clear();
   };
 
-  if (quizComplete) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-100 via-pink-100 to-orange-100 flex items-center justify-center p-6">
-        <div className="bg-white rounded-3xl shadow-2xl p-12 text-center max-w-lg">
-          <div className="text-7xl mb-6">🎉</div>
-          <h1 className="text-5xl font-bold text-purple-600 mb-6">
-            Quiz Complete!
-          </h1>
-          <p className="text-3xl text-gray-700 mb-10">
-            Your Score:{" "}
-            <span className="font-bold text-green-600">{score}</span> /{" "}
-            {questions.length}
-          </p>
-          <button
-            onClick={handleRestart}
-            className="px-10 py-4 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold text-xl shadow-lg hover:scale-105 transition-all"
-          >
-            Play Again 🔄
-          </button>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-100 via-pink-100 to-orange-100 p-6 relative">
       {/* Header */}
-
       <div className="max-w-7xl mx-auto mb-6">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -271,7 +274,6 @@ export default function Quiz() {
       </div>
 
       {/* Result Modal */}
-
       {showResultModal && predictionDetails && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div className="bg-white rounded-3xl shadow-2xl p-8 max-w-lg w-full">
@@ -314,7 +316,7 @@ export default function Quiz() {
             >
               {currentQuestionIndex < questions.length - 1
                 ? "Next ➡️"
-                : "Finish 🏁"}
+                : "Finish 🎉"}
             </button>
           </div>
         </div>
