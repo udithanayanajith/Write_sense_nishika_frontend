@@ -8,303 +8,142 @@ export interface Question {
 const img = (id: string) =>
   `https://images.unsplash.com/${id}?w=400&h=300&fit=crop`;
 
-const img2 = (q: string) => `https://source.unsplash.com/400x300/?${q}`;
+// Letters to cover: A, B, C, D, E, F, G, H, J, L, N, O, P, R, S, U, V
+// Strategy: Create one question per letter, ensuring each letter appears exactly once
 
 export const ALL_QUESTIONS: Question[] = [
-  // ================= ANIMALS =================
-  {
-    word: "CAT",
-    missingIndex: 0,
-    options: ["C", "H", "R"],
-    image: img("photo-1518791841217-8f162f1e1131"),
-  },
+  // ===== A ===== (Letter A)
   {
     word: "CAT",
     missingIndex: 1,
     options: ["A", "O", "E"],
-    image: img("photo-1518791841217-8f162f1e1131"),
-  },
-  {
-    word: "CAT",
-    missingIndex: 2,
-    options: ["T", "N", "R"],
-    image: img("photo-1518791841217-8f162f1e1131"),
+    image: img("photo-1514888286974-6c03e2ca1dba"),
   },
 
+  // ===== B ===== (Letter B)
+  {
+    word: "BAG",
+    missingIndex: 0,
+    options: ["B", "D", "P"],
+    image: img("photo-1553062407-98eeb64c6a62"),
+  },
+
+  // ===== C ===== (Letter C)
+  {
+    word: "CAR",
+    missingIndex: 0,
+    options: ["C", "G", "K"],
+    image: img("photo-1552519507-da3b142c6e3d"),
+  },
+
+  // ===== D ===== (Letter D)
   {
     word: "DOG",
     missingIndex: 0,
-    options: ["D", "R", "H"],
-    image: img("photo-1568526381923-caf3fd520382"),
-  },
-  {
-    word: "DOG",
-    missingIndex: 1,
-    options: ["O", "A", "E"],
-    image: img("photo-1568526381923-caf3fd520382"),
-  },
-  {
-    word: "DOG",
-    missingIndex: 2,
-    options: ["G", "N", "R"],
-    image: img("photo-1568526381923-caf3fd520382"),
+    options: ["D", "B", "P"],
+    image: img("photo-1587300003388-59208cc962cb"),
   },
 
+  // ===== E ===== (Letter E)
   {
-    word: "COW",
-    missingIndex: 0,
-    options: ["C", "H", "R"],
-    image: img("photo-1500595046743-cd271d694d30"),
-  },
-  {
-    word: "COW",
-    missingIndex: 1,
-    options: ["O", "A", "E"],
-    image: img("photo-1500595046743-cd271d694d30"),
-  },
-  {
-    word: "COW",
-    missingIndex: 2,
-    options: ["W", "N", "R"],
-    image: img("photo-1500595046743-cd271d694d30"),
-  },
-
-  {
-    word: "HEN",
-    missingIndex: 0,
-    options: ["H", "R", "C"],
-    image: img("photo-1548550023-2bdb3c5beed7"),
-  },
-  {
-    word: "HEN",
+    word: "BED",
     missingIndex: 1,
     options: ["E", "A", "O"],
-    image: img("photo-1548550023-2bdb3c5beed7"),
+    image: img("photo-1505693416388-ac5ce068fe85"),
   },
+
+  // ===== F ===== (Letter F)
+  {
+    word: "FOX",
+    missingIndex: 0,
+    options: ["F", "P", "V"],
+    image: img("photo-1474511320723-9a56873867b5"),
+  },
+
+  // ===== G ===== (Letter G)
+  {
+    word: "PIG",
+    missingIndex: 2,
+    options: ["G", "C", "D"],
+    image: img("photo-1516467508483-a7212febe31a"),
+  },
+
+  // ===== H ===== (Letter H)
   {
     word: "HEN",
-    missingIndex: 2,
-    options: ["N", "R", "T"],
+    missingIndex: 0,
+    options: ["H", "F", "N"],
     image: img("photo-1548550023-2bdb3c5beed7"),
   },
 
-  // ================= OBJECTS =================
+  // ===== J ===== (Letter J)
   {
-    word: "HAT",
+    word: "JET",
     missingIndex: 0,
-    options: ["H", "C", "R"],
-    image: img("photo-1520975682031-ae0a16e4c2e0"),
+    options: ["J", "G", "L"],
+    image: img("photo-1540962351504-03099e0a754b"),
   },
+  // ===== L ===== (Letter L)
   {
-    word: "HAT",
-    missingIndex: 1,
-    options: ["A", "O", "E"],
-    image: img("photo-1520975682031-ae0a16e4c2e0"),
-  },
-  {
-    word: "HAT",
+    word: "MAP",
     missingIndex: 2,
-    options: ["T", "N", "R"],
-    image: img("photo-1520975682031-ae0a16e4c2e0"),
+    options: ["L", "B", "J"],
+    image: img("photo-1524661135-423995f22d0b"),
   },
 
-  {
-    word: "PEN",
-    missingIndex: 0,
-    options: ["P", "H", "R"],
-    image: img("photo-1583485088034-697b5bc54ccd"),
-  },
-  {
-    word: "PEN",
-    missingIndex: 1,
-    options: ["E", "A", "O"],
-    image: img("photo-1583485088034-697b5bc54ccd"),
-  },
-  {
-    word: "PEN",
-    missingIndex: 2,
-    options: ["N", "R", "T"],
-    image: img("photo-1583485088034-697b5bc54ccd"),
-  },
-
-  {
-    word: "CUP",
-    missingIndex: 0,
-    options: ["C", "H", "R"],
-    image: img("photo-1509042239860-f550ce710b93"),
-  },
-  {
-    word: "CUP",
-    missingIndex: 1,
-    options: ["U", "O", "A"],
-    image: img("photo-1509042239860-f550ce710b93"),
-  },
-  {
-    word: "CUP",
-    missingIndex: 2,
-    options: ["P", "R", "T"],
-    image: img("photo-1509042239860-f550ce710b93"),
-  },
-
-
-  // ================= FOOD =================
-  {
-    word: "PAN",
-    missingIndex: 0,
-    options: ["P", "H", "R"],
-    image: img("photo-1588166524941-3bf61a9c41db"),
-  },
-  {
-    word: "PAN",
-    missingIndex: 1,
-    options: ["A", "O", "E"],
-    image: img("photo-1588166524941-3bf61a9c41db"),
-  },
+  // ===== N ===== (Letter N)
   {
     word: "PAN",
     missingIndex: 2,
-    options: ["N", "R", "T"],
-    image: img("photo-1588166524941-3bf61a9c41db"),
+    options: ["N", "H", "V"],
+    image: img("photo-1565557623262-b51c2513a641"),
   },
 
-
-
-  // ================= REINFORCEMENT (MIXED) =================
+  // ===== O ===== (Letter O)
   {
-    word: "CAP",
-    missingIndex: 0,
-    options: ["C", "H", "R"],
-    image: img2("baseball-cap"),
-  },
-  {
-    word: "CAP",
-    missingIndex: 1,
-    options: ["A", "O", "U"],
-    image: img2("baseball-cap"),
-  },
-  {
-    word: "CAP",
-    missingIndex: 2,
-    options: ["P", "R", "N"],
-    image: img2("baseball-cap"),
-  },
-  // ===== BAG =====
-  {
-    word: "BAG",
-    missingIndex: 0,
-    options: ["B", "C", "R"],
-    image: img2("school-bag"),
-  },
-  {
-    word: "BAG",
-    missingIndex: 1,
-    options: ["A", "O", "U"],
-    image: img2("school-bag"),
-  },
-  {
-    word: "BAG",
-    missingIndex: 2,
-    options: ["G", "R", "N"],
-    image: img2("school-bag"),
-  },
-
-  // ===== VAN =====
-  {
-    word: "VAN",
-    missingIndex: 0,
-    options: ["V", "R", "H"],
-    image: img2("van,vehicle"),
-  },
-  {
-    word: "VAN",
-    missingIndex: 1,
-    options: ["A", "O", "U"],
-    image: img2("van,vehicle"),
-  },
-  {
-    word: "VAN",
-    missingIndex: 2,
-    options: ["N", "R", "S"],
-    image: img2("van,vehicle"),
-  },
-
-  // ===== DOG =====
-  {
-    word: "DOG",
-    missingIndex: 0,
-    options: ["D", "C", "R"],
-    image: img2("dog"),
-  },
-  {
-    word: "DOG",
+    word: "COW",
     missingIndex: 1,
     options: ["O", "A", "U"],
-    image: img2("dog"),
-  },
-  {
-    word: "DOG",
-    missingIndex: 2,
-    options: ["G", "R", "N"],
-    image: img2("dog"),
+    image: img("photo-1500595046743-cd271d694d30"),
   },
 
-  // ===== POT =====
+  // ===== P ===== (Letter P)
   {
-    word: "POT",
+    word: "PEN",
     missingIndex: 0,
-    options: ["P", "C", "R"],
-    image: img2("cooking-pot"),
-  },
-  {
-    word: "POT",
-    missingIndex: 1,
-    options: ["O", "A", "U"],
-    image: img2("cooking-pot"),
-  },
-  {
-    word: "POT",
-    missingIndex: 2,
-    options: ["T", "R", "N"],
-    image: img2("cooking-pot"),
+    options: ["P", "B", "F"],
+    image: img("photo-1455390582262-044cdead277a"),
   },
 
-  // ===== SUN =====
+  // ===== R ===== (Letter R)
   {
-    word: "SUN",
+    word: "RAT",
     missingIndex: 0,
-    options: ["S", "R", "H"],
-    image: img2("sun,sky"),
+    options: ["R", "N", "L"],
+    image: img("photo-1425082661705-1834bfd09dca"),
   },
+
+  // ===== S ===== (Letter S)
   {
-    word: "SUN",
+    word: "SEA",
+    missingIndex: 0,
+    options: ["S", "C", "F"],
+    image: img("photo-1505142468610-359e7d316be0"),
+  },
+
+  // ===== U ===== (Letter U)
+  {
+    word: "BUS",
     missingIndex: 1,
     options: ["U", "O", "A"],
-    image: img2("sun,sky"),
-  },
-  {
-    word: "SUN",
-    missingIndex: 2,
-    options: ["N", "R", "S"],
-    image: img2("sun,sky"),
+    image: img("photo-1570125909232-eb263c188f7e"),
   },
 
-  // ===== HAT =====
+  // ===== V ===== (Letter V)
   {
-    word: "HAT",
+    word: "VAN",
     missingIndex: 0,
-    options: ["H", "C", "R"],
-    image: img2("hat"),
-  },
-  {
-    word: "HAT",
-    missingIndex: 1,
-    options: ["A", "O", "U"],
-    image: img2("hat"),
-  },
-  {
-    word: "HAT",
-    missingIndex: 2,
-    options: ["T", "R", "N"],
-    image: img2("hat"),
+    options: ["V", "N", "F"],
+    image: img("photo-1527786356703-4b100091cd2c"),
   },
 ];
