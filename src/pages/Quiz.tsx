@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from "react";
 import { ALL_QUESTIONS, Question } from "../data/simpleQuestions";
 import KidCanvas, { KidCanvasRef } from "../components/KidCanvas";
 import { useNavigate } from "react-router-dom";
+import { BASEURL } from "../config/CONFIG";
 
 const LETTERS = [
   "A",
@@ -41,6 +42,11 @@ export default function Quiz() {
   const [correctLetters, setCorrectLetters] = useState<string[]>([]);
   const [weakLetters, setWeakLetters] = useState<string[]>([]);
   const navigate = useNavigate();
+
+  const parentemail = localStorage.getItem("parentEmail") || "";
+  if (!parentemail) {
+    navigate("/");
+  }
 
   // ALL HOOKS MUST BE AT THE TOP - before any conditional returns
   useEffect(() => {
@@ -97,8 +103,9 @@ export default function Quiz() {
       const formData = new FormData();
       formData.append("image", imageBlob, "letter.png");
       formData.append("actual_letter", correctAnswer);
+      formData.append("parent_email", parentemail);
 
-      const response = await fetch("http://127.0.0.1:5000/predict", {
+      const response = await fetch(BASEURL + "/predict", {
         method: "POST",
         body: formData,
       });
@@ -124,7 +131,7 @@ export default function Quiz() {
     } catch (error) {
       console.error("Prediction error:", error);
       alert(
-        "Sorry, there was an error. Please make sure the Flask server is running on port 5000!"
+        "Sorry, there was an error. Please make sure the Flask server is running on port 5000!",
       );
     } finally {
       setIsVerifying(false);

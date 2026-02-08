@@ -7,7 +7,6 @@ const wordFamilies = {
   "AN Family": ["CAN", "MAN", "FAN", "PAN", "VAN"],
   "AP Family": ["CAP", "MAP", "NAP", "TAP"],
   "ET Family": ["PET", "GET", "MET", "LET", "SET", "VET"],
-  // ... add more using the file list
 };
 
 export default function Tutorials() {
